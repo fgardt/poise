@@ -223,33 +223,19 @@ pub fn command(
     let required_permissions = permissions_to_tokens(&args.required_permissions);
     let required_bot_permissions = permissions_to_tokens(&args.required_bot_permissions);
 
-    fn build_install_context(
-        contexts: &Option<syn::punctuated::Punctuated<syn::Ident, syn::Token![|]>>,
-    ) -> syn::Expr {
-        match contexts {
-            Some(contexts) => {
-                let contexts = contexts.iter();
-                syn::parse_quote! { Some(vec![ #(poise::serenity_prelude::InstallationContext::#contexts),* ]) }
-            }
-            None => syn::parse_quote! { None },
-        }
-    }
+    let install_context = if let Some(contexts) = &args.install_context {
+        let contexts = contexts.iter();
+        syn::parse_quote! { Some(vec![ #(poise::serenity_prelude::InstallationContext::#contexts),* ]) }
+    } else {
+        syn::parse_quote! { None }
+    };
 
-    let install_context = build_install_context(&args.install_context);
-
-    fn build_interaction_context(
-        contexts: &Option<syn::punctuated::Punctuated<syn::Ident, syn::Token![|]>>,
-    ) -> syn::Expr {
-        match contexts {
-            Some(contexts) => {
-                let contexts = contexts.iter();
-                syn::parse_quote! { Some(vec![ #(poise::serenity_prelude::InteractionContext::#contexts),* ]) }
-            }
-            None => syn::parse_quote! { None },
-        }
-    }
-
-    let interaction_context = build_interaction_context(&args.interaction_context);
+    let interaction_context = if let Some(contexts) = &args.interaction_context {
+        let contexts = contexts.iter();
+        syn::parse_quote! { Some(vec![ #(poise::serenity_prelude::InteractionContext::#contexts),* ]) }
+    } else {
+        syn::parse_quote! { None }
+    };
 
     let inv = Invocation {
         parameters,
