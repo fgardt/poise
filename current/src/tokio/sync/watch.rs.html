@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.38.0/src/sync/watch.rs`."><title>watch.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (032af18af 2024-06-02)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.41.1/src/sync/watch.rs`."><title>watch.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0-nightly (f7273e004 2024-11-12)" data-channel="nightly" data-search-js="search-853ef39b.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">tokio/sync/</div>watch.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1419,7 +1420,62 @@
 <a href="#1419" id="1419">1419</a>
 <a href="#1420" id="1420">1420</a>
 <a href="#1421" id="1421">1421</a>
-</pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(not(feature = <span class="string">"sync"</span>), allow(dead_code, unreachable_pub))]
+<a href="#1422" id="1422">1422</a>
+<a href="#1423" id="1423">1423</a>
+<a href="#1424" id="1424">1424</a>
+<a href="#1425" id="1425">1425</a>
+<a href="#1426" id="1426">1426</a>
+<a href="#1427" id="1427">1427</a>
+<a href="#1428" id="1428">1428</a>
+<a href="#1429" id="1429">1429</a>
+<a href="#1430" id="1430">1430</a>
+<a href="#1431" id="1431">1431</a>
+<a href="#1432" id="1432">1432</a>
+<a href="#1433" id="1433">1433</a>
+<a href="#1434" id="1434">1434</a>
+<a href="#1435" id="1435">1435</a>
+<a href="#1436" id="1436">1436</a>
+<a href="#1437" id="1437">1437</a>
+<a href="#1438" id="1438">1438</a>
+<a href="#1439" id="1439">1439</a>
+<a href="#1440" id="1440">1440</a>
+<a href="#1441" id="1441">1441</a>
+<a href="#1442" id="1442">1442</a>
+<a href="#1443" id="1443">1443</a>
+<a href="#1444" id="1444">1444</a>
+<a href="#1445" id="1445">1445</a>
+<a href="#1446" id="1446">1446</a>
+<a href="#1447" id="1447">1447</a>
+<a href="#1448" id="1448">1448</a>
+<a href="#1449" id="1449">1449</a>
+<a href="#1450" id="1450">1450</a>
+<a href="#1451" id="1451">1451</a>
+<a href="#1452" id="1452">1452</a>
+<a href="#1453" id="1453">1453</a>
+<a href="#1454" id="1454">1454</a>
+<a href="#1455" id="1455">1455</a>
+<a href="#1456" id="1456">1456</a>
+<a href="#1457" id="1457">1457</a>
+<a href="#1458" id="1458">1458</a>
+<a href="#1459" id="1459">1459</a>
+<a href="#1460" id="1460">1460</a>
+<a href="#1461" id="1461">1461</a>
+<a href="#1462" id="1462">1462</a>
+<a href="#1463" id="1463">1463</a>
+<a href="#1464" id="1464">1464</a>
+<a href="#1465" id="1465">1465</a>
+<a href="#1466" id="1466">1466</a>
+<a href="#1467" id="1467">1467</a>
+<a href="#1468" id="1468">1468</a>
+<a href="#1469" id="1469">1469</a>
+<a href="#1470" id="1470">1470</a>
+<a href="#1471" id="1471">1471</a>
+<a href="#1472" id="1472">1472</a>
+<a href="#1473" id="1473">1473</a>
+<a href="#1474" id="1474">1474</a>
+<a href="#1475" id="1475">1475</a>
+<a href="#1476" id="1476">1476</a>
+<a href="#1477" id="1477">1477</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(not(feature = <span class="string">"sync"</span>), allow(dead_code, unreachable_pub))]
 
 </span><span class="doccomment">//! A multi-producer, multi-consumer channel that only retains the *last* sent
 //! value.
@@ -1532,7 +1588,8 @@
 //! [`Sender::closed`]: crate::sync::watch::Sender::closed
 //! [`Sender::subscribe()`]: crate::sync::watch::Sender::subscribe
 
-</span><span class="kw">use </span><span class="kw">crate</span>::sync::notify::Notify;
+</span><span class="kw">use </span><span class="kw">crate</span>::runtime::coop::cooperative;
+<span class="kw">use </span><span class="kw">crate</span>::sync::notify::Notify;
 
 <span class="kw">use </span><span class="kw">crate</span>::loom::sync::atomic::AtomicUsize;
 <span class="kw">use </span><span class="kw">crate</span>::loom::sync::atomic::Ordering::{AcqRel, Relaxed};
@@ -1574,6 +1631,12 @@
         <span class="self">Self </span>{
             shared: <span class="self">self</span>.shared.clone(),
         }
+    }
+}
+
+<span class="kw">impl</span>&lt;T: Default&gt; Default <span class="kw">for </span>Sender&lt;T&gt; {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new(T::default())
     }
 }
 
@@ -1990,7 +2053,7 @@
     /// assert_eq!(*rx.borrow(), "hello");
     /// ```
     </span><span class="kw">pub fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ref&lt;<span class="lifetime">'_</span>, T&gt; {
-        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read().unwrap();
+        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read();
 
         <span class="comment">// After obtaining a read-lock no concurrent writes could occur
         // and the loaded version matches that of the borrowed reference.
@@ -2037,7 +2100,7 @@
     /// [`changed`]: Receiver::changed
     /// [`borrow`]: Receiver::borrow
     </span><span class="kw">pub fn </span>borrow_and_update(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; Ref&lt;<span class="lifetime">'_</span>, T&gt; {
-        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read().unwrap();
+        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read();
 
         <span class="comment">// After obtaining a read-lock no concurrent writes could occur
         // and the loaded version matches that of the borrowed reference.
@@ -2158,7 +2221,7 @@
     /// }
     /// ```
     </span><span class="kw">pub async fn </span>changed(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), error::RecvError&gt; {
-        changed_impl(<span class="kw-2">&amp;</span><span class="self">self</span>.shared, <span class="kw-2">&amp;mut </span><span class="self">self</span>.version).<span class="kw">await
+        cooperative(changed_impl(<span class="kw-2">&amp;</span><span class="self">self</span>.shared, <span class="kw-2">&amp;mut </span><span class="self">self</span>.version)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Waits for a value that satisfies the provided condition.
@@ -2223,12 +2286,19 @@
     /// ```
     </span><span class="kw">pub async fn </span>wait_for(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        f: <span class="kw">impl </span>FnMut(<span class="kw-2">&amp;</span>T) -&gt; bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Ref&lt;<span class="lifetime">'_</span>, T&gt;, error::RecvError&gt; {
+        cooperative(<span class="self">self</span>.wait_for_inner(f)).<span class="kw">await
+    </span>}
+
+    <span class="kw">async fn </span>wait_for_inner(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         <span class="kw-2">mut </span>f: <span class="kw">impl </span>FnMut(<span class="kw-2">&amp;</span>T) -&gt; bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Ref&lt;<span class="lifetime">'_</span>, T&gt;, error::RecvError&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>closed = <span class="bool-val">false</span>;
         <span class="kw">loop </span>{
             {
-                <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read().unwrap();
+                <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read();
 
                 <span class="kw">let </span>new_version = <span class="self">self</span>.shared.state.load().version();
                 <span class="kw">let </span>has_changed = <span class="self">self</span>.version != new_version;
@@ -2502,7 +2572,7 @@
     {
         {
             <span class="comment">// Acquire the write lock and update the value.
-            </span><span class="kw">let </span><span class="kw-2">mut </span>lock = <span class="self">self</span>.shared.value.write().unwrap();
+            </span><span class="kw">let </span><span class="kw-2">mut </span>lock = <span class="self">self</span>.shared.value.write();
 
             <span class="comment">// Update the value and catch possible panic inside func.
             </span><span class="kw">let </span>result = panic::catch_unwind(panic::AssertUnwindSafe(|| modify(<span class="kw-2">&amp;mut </span>lock)));
@@ -2579,7 +2649,7 @@
     /// assert_eq!(*tx.borrow(), "hello");
     /// ```
     </span><span class="kw">pub fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ref&lt;<span class="lifetime">'_</span>, T&gt; {
-        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read().unwrap();
+        <span class="kw">let </span>inner = <span class="self">self</span>.shared.value.read();
 
         <span class="comment">// The sender/producer always sees the current version
         </span><span class="kw">let </span>has_changed = <span class="bool-val">false</span>;
@@ -2639,19 +2709,22 @@
     /// }
     /// ```
     </span><span class="kw">pub async fn </span>closed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">crate</span>::trace::async_trace_leaf().<span class="kw">await</span>;
+        cooperative(<span class="kw">async </span>{
+            <span class="kw">crate</span>::trace::async_trace_leaf().<span class="kw">await</span>;
 
-        <span class="kw">while </span><span class="self">self</span>.receiver_count() &gt; <span class="number">0 </span>{
-            <span class="kw">let </span>notified = <span class="self">self</span>.shared.notify_tx.notified();
+            <span class="kw">while </span><span class="self">self</span>.receiver_count() &gt; <span class="number">0 </span>{
+                <span class="kw">let </span>notified = <span class="self">self</span>.shared.notify_tx.notified();
 
-            <span class="kw">if </span><span class="self">self</span>.receiver_count() == <span class="number">0 </span>{
-                <span class="kw">return</span>;
-            }
+                <span class="kw">if </span><span class="self">self</span>.receiver_count() == <span class="number">0 </span>{
+                    <span class="kw">return</span>;
+                }
 
-            notified.<span class="kw">await</span>;
-            <span class="comment">// The channel could have been reopened in the meantime by calling
-            // `subscribe`, so we loop again.
-        </span>}
+                notified.<span class="kw">await</span>;
+                <span class="comment">// The channel could have been reopened in the meantime by calling
+                // `subscribe`, so we loop again.
+            </span>}
+        })
+        .<span class="kw">await</span>;
     }
 
     <span class="doccomment">/// Creates a new [`Receiver`] connected to this `Sender`.
@@ -2738,6 +2811,45 @@
     /// ```
     </span><span class="kw">pub fn </span>receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.shared.ref_count_rx.load(Relaxed)
+    }
+
+    <span class="doccomment">/// Returns the number of senders that currently exist.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use tokio::sync::watch;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let (tx1, rx) = watch::channel("hello");
+    ///
+    ///     assert_eq!(1, tx1.sender_count());
+    ///
+    ///     let tx2 = tx1.clone();
+    ///
+    ///     assert_eq!(2, tx1.sender_count());
+    ///     assert_eq!(2, tx2.sender_count());
+    /// }
+    /// ```
+    </span><span class="kw">pub fn </span>sender_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.shared.ref_count_tx.load(Relaxed)
+    }
+
+    <span class="doccomment">/// Returns `true` if senders belong to the same channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let (tx, rx) = tokio::sync::watch::channel(true);
+    /// let tx2 = tx.clone();
+    /// assert!(tx.same_channel(&amp;tx2));
+    ///
+    /// let (tx3, rx3) = tokio::sync::watch::channel(true);
+    /// assert!(!tx3.same_channel(&amp;tx2));
+    /// ```
+    </span><span class="kw">pub fn </span>same_channel(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
+        Arc::ptr_eq(<span class="kw-2">&amp;</span><span class="self">self</span>.shared, <span class="kw-2">&amp;</span>other.shared)
     }
 }
 

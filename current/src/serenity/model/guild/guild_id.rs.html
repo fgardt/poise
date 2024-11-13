@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serenity-0.12.2/src/model/guild/guild_id.rs`."><title>guild_id.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (032af18af 2024-06-02)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serenity-0.12.3/src/model/guild/guild_id.rs`."><title>guild_id.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0-nightly (f7273e004 2024-11-12)" data-channel="nightly" data-search-js="search-853ef39b.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/model/guild/</div>guild_id.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1866,7 +1867,15 @@
 <a href="#1866" id="1866">1866</a>
 <a href="#1867" id="1867">1867</a>
 <a href="#1868" id="1868">1868</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt;
+<a href="#1869" id="1869">1869</a>
+<a href="#1870" id="1870">1870</a>
+<a href="#1871" id="1871">1871</a>
+<a href="#1872" id="1872">1872</a>
+<a href="#1873" id="1873">1873</a>
+<a href="#1874" id="1874">1874</a>
+<a href="#1875" id="1875">1875</a>
+<a href="#1876" id="1876">1876</a>
+<a href="#1877" id="1877">1877</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt;
 
 <span class="attr">#[cfg(feature = <span class="string">"model"</span>)]
 </span><span class="kw">use </span>futures::stream::Stream;
@@ -1901,7 +1910,6 @@
 </span><span class="kw">use </span><span class="kw">crate</span>::internal::prelude::<span class="kw-2">*</span>;
 <span class="attr">#[cfg(feature = <span class="string">"model"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::json::json;
-<span class="kw">use </span><span class="kw">crate</span>::model::guild::SerializeIter;
 <span class="kw">use </span><span class="kw">crate</span>::model::prelude::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg(feature = <span class="string">"model"</span>)]
@@ -2077,7 +2085,7 @@
     /// [Ban Members]: Permissions::BAN_MEMBERS
     </span><span class="attr">#[inline]
     </span><span class="kw">pub async fn </span>ban(<span class="self">self</span>, http: <span class="kw">impl </span>AsRef&lt;Http&gt;, user: <span class="kw">impl </span>Into&lt;UserId&gt;, dmd: u8) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>._ban(http, user.into(), dmd, <span class="prelude-val">None</span>).<span class="kw">await
+        <span class="self">self</span>.ban_(http, user.into(), dmd, <span class="prelude-val">None</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Ban a [`User`] from the guild with a reason. Refer to [`Self::ban`] to further
@@ -2095,10 +2103,10 @@
         dmd: u8,
         reason: <span class="kw">impl </span>AsRef&lt;str&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>._ban(http, user.into(), dmd, <span class="prelude-val">Some</span>(reason.as_ref())).<span class="kw">await
+        <span class="self">self</span>.ban_(http, user.into(), dmd, <span class="prelude-val">Some</span>(reason.as_ref())).<span class="kw">await
     </span>}
 
-    <span class="kw">async fn </span>_ban(
+    <span class="kw">async fn </span>ban_(
         <span class="self">self</span>,
         http: <span class="kw">impl </span>AsRef&lt;Http&gt;,
         user: UserId,
@@ -2131,18 +2139,18 @@
     </span><span class="kw">pub async fn </span>bulk_ban(
         <span class="self">self</span>,
         http: <span class="kw-2">&amp;</span>Http,
-        users: <span class="kw">impl </span>IntoIterator&lt;Item = UserId&gt;,
+        user_ids: <span class="kw-2">&amp;</span>[UserId],
         delete_message_seconds: u32,
         reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;BulkBanResponse&gt; {
         <span class="attr">#[derive(serde::Serialize)]
-        </span><span class="kw">struct </span>BulkBan&lt;I&gt; {
-            user_ids: I,
+        </span><span class="kw">struct </span>BulkBan&lt;<span class="lifetime">'a</span>&gt; {
+            user_ids: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[UserId],
             delete_message_seconds: u32,
         }
 
         <span class="kw">let </span>map = BulkBan {
-            user_ids: SerializeIter::new(users.into_iter()),
+            user_ids,
             delete_message_seconds,
         };
 
@@ -2765,6 +2773,16 @@
         builder: EditGuildWidget&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;GuildWidget&gt; {
         builder.execute(cache_http, <span class="self">self</span>).<span class="kw">await
+    </span>}
+
+    <span class="doccomment">/// Gets a specific role in the guild, by Id.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user is not in the guild, or if the role does not
+    /// exist.
+    </span><span class="kw">pub async fn </span>role(<span class="self">self</span>, http: <span class="kw">impl </span>AsRef&lt;Http&gt;, role_id: RoleId) -&gt; <span class="prelude-ty">Result</span>&lt;Role&gt; {
+        http.as_ref().get_guild_role(<span class="self">self</span>, role_id).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Gets all of the guild's roles over the REST API.
@@ -3563,7 +3581,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>PartialGuild&gt; <span class="kw">for </span>GuildId {
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>PartialGuild&gt; <span class="kw">for </span>GuildId {
     <span class="doccomment">/// Gets the Id of a partial guild.
     </span><span class="kw">fn </span>from(guild: <span class="kw-2">&amp;</span>PartialGuild) -&gt; GuildId {
         guild.id
@@ -3577,7 +3595,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>GuildInfo&gt; <span class="kw">for </span>GuildId {
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>GuildInfo&gt; <span class="kw">for </span>GuildId {
     <span class="doccomment">/// Gets the Id of Guild information struct.
     </span><span class="kw">fn </span>from(guild_info: <span class="kw-2">&amp;</span>GuildInfo) -&gt; GuildId {
         guild_info.id
@@ -3591,7 +3609,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>InviteGuild&gt; <span class="kw">for </span>GuildId {
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>InviteGuild&gt; <span class="kw">for </span>GuildId {
     <span class="doccomment">/// Gets the Id of Invite Guild struct.
     </span><span class="kw">fn </span>from(invite_guild: <span class="kw-2">&amp;</span>InviteGuild) -&gt; GuildId {
         invite_guild.id
@@ -3605,7 +3623,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Guild&gt; <span class="kw">for </span>GuildId {
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>Guild&gt; <span class="kw">for </span>GuildId {
     <span class="doccomment">/// Gets the Id of Guild.
     </span><span class="kw">fn </span>from(live_guild: <span class="kw-2">&amp;</span>Guild) -&gt; GuildId {
         live_guild.id
@@ -3619,7 +3637,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>WebhookGuild&gt; <span class="kw">for </span>GuildId {
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>WebhookGuild&gt; <span class="kw">for </span>GuildId {
     <span class="doccomment">/// Gets the Id of Webhook Guild struct.
     </span><span class="kw">fn </span>from(webhook_guild: <span class="kw-2">&amp;</span>WebhookGuild) -&gt; GuildId {
         webhook_guild.id

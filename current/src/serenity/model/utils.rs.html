@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serenity-0.12.2/src/model/utils.rs`."><title>utils.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (032af18af 2024-06-02)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serenity-0.12.3/src/model/utils.rs`."><title>utils.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0-nightly (f7273e004 2024-11-12)" data-channel="nightly" data-search-js="search-853ef39b.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/model/</div>utils.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -426,13 +427,37 @@
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
 <a href="#428" id="428">428</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::cell::Cell;
-<span class="kw">use </span>std::fmt;
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::hash::Hash;
 <span class="kw">use </span>std::marker::PhantomData;
 <span class="kw">use </span>std::num::NonZeroU64;
 
+<span class="kw">use </span>serde::de::Error <span class="kw">as </span>DeError;
 <span class="kw">use </span>serde::ser::{Serialize, SerializeSeq, Serializer};
+<span class="kw">use </span>serde_cow::CowStr;
 
 <span class="kw">use </span><span class="kw">super</span>::prelude::<span class="kw-2">*</span>;
 
@@ -508,28 +533,6 @@
         <span class="prelude-val">Ok</span>(NonZeroU64::new(val).map(Id::from))
     } <span class="kw">else </span>{
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
-    }
-}
-
-<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct </span>SerializeIter&lt;I&gt;(Cell&lt;<span class="prelude-ty">Option</span>&lt;I&gt;&gt;);
-
-<span class="kw">impl</span>&lt;I&gt; SerializeIter&lt;I&gt; {
-    <span class="kw">pub fn </span>new(iter: I) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>(Cell::new(<span class="prelude-val">Some</span>(iter)))
-    }
-}
-
-<span class="kw">impl</span>&lt;Iter, Item&gt; serde::Serialize <span class="kw">for </span>SerializeIter&lt;Iter&gt;
-<span class="kw">where
-    </span>Iter: Iterator&lt;Item = Item&gt;,
-    Item: serde::Serialize,
-{
-    <span class="kw">fn </span>serialize&lt;S: serde::Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(iter) = <span class="self">self</span>.<span class="number">0</span>.take() <span class="kw">else </span>{
-            <span class="kw">return </span>serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="number">0</span>))<span class="question-mark">?</span>.end();
-        };
-
-        serializer.collect_seq(iter)
     }
 }
 
@@ -788,7 +791,8 @@
         <span class="prelude-ty">Option</span>::&lt;S&gt;::deserialize(deserializer).map(|s| s.map(Secret::new))
     }
 
-    <span class="kw">pub fn </span>serialize&lt;S: Serialize + Zeroize, Sr: Serializer&gt;(
+    <span class="attr">#[allow(clippy::ref_option)]
+    </span><span class="kw">pub fn </span>serialize&lt;S: Serialize + Zeroize, Sr: Serializer&gt;(
         secret: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;Secret&lt;S&gt;&gt;,
         serializer: Sr,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Sr::Ok, Sr::Error&gt; {
@@ -853,5 +857,49 @@
 
         <span class="prelude-val">Ok</span>(map)
     }
+}
+
+<span class="kw">pub fn </span>discord_colours_opt&lt;<span class="lifetime">'de</span>, D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Colour&gt;&gt;, D::Error&gt;
+<span class="kw">where
+    </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+{
+    <span class="kw">let </span>vec_str: <span class="prelude-ty">Option</span>&lt;Vec&lt;CowStr&lt;<span class="lifetime">'_</span>&gt;&gt;&gt; = Deserialize::deserialize(deserializer)<span class="question-mark">?</span>;
+
+    <span class="kw">let </span><span class="prelude-val">Some</span>(vec_str) = vec_str <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) };
+
+    <span class="kw">if </span>vec_str.is_empty() {
+        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
+    }
+
+    deserialize_colours::&lt;D&gt;(vec_str).map(<span class="prelude-val">Some</span>)
+}
+
+<span class="kw">pub fn </span>discord_colours&lt;<span class="lifetime">'de</span>, D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Colour&gt;, D::Error&gt;
+<span class="kw">where
+    </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+{
+    <span class="kw">let </span>vec_str: Vec&lt;CowStr&lt;<span class="lifetime">'_</span>&gt;&gt; = Deserialize::deserialize(deserializer)<span class="question-mark">?</span>;
+
+    deserialize_colours::&lt;D&gt;(vec_str)
+}
+
+<span class="kw">fn </span>deserialize_colours&lt;<span class="lifetime">'de</span>, D&gt;(vec_str: Vec&lt;CowStr&lt;<span class="lifetime">'_</span>&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Colour&gt;, D::Error&gt;
+<span class="kw">where
+    </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+{
+    vec_str
+        .into_iter()
+        .map(|s| {
+            <span class="kw">let </span>s = s.<span class="number">0</span>.strip_prefix(<span class="string">'#'</span>).ok_or_else(|| DeError::custom(<span class="string">"Invalid colour data"</span>))<span class="question-mark">?</span>;
+
+            <span class="kw">if </span>s.len() != <span class="number">6 </span>{
+                <span class="kw">return </span><span class="prelude-val">Err</span>(DeError::custom(<span class="string">"Invalid colour data length"</span>));
+            }
+
+            u32::from_str_radix(s, <span class="number">16</span>)
+                .map(Colour::new)
+                .map_err(|<span class="kw">_</span>| DeError::custom(<span class="string">"Invalid colour data"</span>))
+        })
+        .collect()
 }
 </code></pre></div></section></main></body></html>
